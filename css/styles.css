@@ -1,6 +1,6 @@
 :root {
-  --bg:#F7F2E6; --surface:#FFFFFF; --surface-2:#EFE8D6; --ink:#262B1E; --ink-soft:#5C6350;
-  --line:#DED2AF; --accent:#4F6B41; --accent-ink:#FFFFFF; --accent-soft:#E4EBD9;
+  --bg:#EAF2E4; --surface:#FFFFFF; --surface-2:#DFEBD8; --ink:#262B1E; --ink-soft:#5C6350;
+  --line:#CBDCC1; --accent:#4F6B41; --accent-ink:#FFFFFF; --accent-soft:#E4EBD9;
   --gold:#B98A1F; --gold-soft:#F3E3BC; --danger:#A6432A; --danger-soft:#F3DCD2;
   --shadow:0 1px 2px rgba(38,43,30,.06),0 6px 20px rgba(38,43,30,.06); --radius:14px; --radius-sm:9px;
 }
