@@ -11,7 +11,7 @@
 }
 * { box-sizing:border-box; }
 html,body { margin:0; padding:0; }
-body { background:var(--bg); color:var(--ink); font-family:'Nunito',-apple-system,BlinkMacSystemFont,sans-serif; min-height:100vh; padding-bottom:calc(40px + env(safe-area-inset-bottom)); }
+body { background:var(--bg); color:var(--ink); font-family:'Nunito',-apple-system,BlinkMacSystemFont,sans-serif; min-height:100vh; padding-bottom:calc(40px + env(safe-area-inset-bottom)); touch-action:manipulation; }
 h1,h2,h3,.display { font-family:'Baloo 2',Georgia,serif; font-weight:600; letter-spacing:-0.01em; margin:0; }
 .wrap { max-width:640px; margin:0 auto; padding:0 calc(18px + env(safe-area-inset-right)) 0 calc(18px + env(safe-area-inset-left)); }
 .topbar { display:flex; align-items:center; justify-content:space-between; padding:calc(20px + env(safe-area-inset-top)) 0 10px; }
