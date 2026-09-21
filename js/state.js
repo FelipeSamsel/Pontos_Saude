@@ -7,7 +7,9 @@ const state = {
   foods: [], entries: [], history: [],
   tab: 'hoje', foodQuery: '', foodCat: 'Todos',
   adminOpen: false, editingFoodId: null, confirmDeleteId: null,
-  authMode: 'login', authError: '', busy: false
+  authMode: 'login', authError: '', busy: false,
+  users: [], usersLoading: false, usersLoadError: null,
+  passwordEditId: null, confirmDeleteUserId: null
 };
 
 // state for the "add food to today" inline picker (js/entries.js)

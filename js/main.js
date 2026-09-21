@@ -24,8 +24,8 @@ function render() {
       <div class="goal-edit"><span>Meta diária:</span><input type="number" min="0" step="0.5" id="goalInput" value="${goal}"><button id="goalSaveBtn">salvar</button></div>
     </div>
   </div>
-  <div class="tabs">${tabBtn('hoje', 'Hoje')}${tabBtn('historico', 'Histórico')}${tabBtn('alimentos', 'Alimentos')}</div>
-  <div id="panels">${renderHoje()}${renderHistorico()}${renderAlimentos()}</div>`;
+  <div class="tabs">${tabBtn('hoje', 'Hoje')}${tabBtn('historico', 'Histórico')}${tabBtn('alimentos', 'Alimentos')}${state.isAdmin ? tabBtn('usuarios', 'Usuários') : ''}</div>
+  <div id="panels">${renderHoje()}${renderHistorico()}${renderAlimentos()}${state.isAdmin ? renderUsuarios() : ''}</div>`;
 
   appEl.innerHTML = html;
   attachHandlers();
@@ -70,6 +70,8 @@ function attachHandlers() {
   appEl.querySelectorAll('[data-ask-delete]').forEach(b => b.addEventListener('click', () => { state.confirmDeleteId = b.dataset.askDelete; render(); }));
   appEl.querySelectorAll('[data-cancel-delete]').forEach(b => b.addEventListener('click', () => { state.confirmDeleteId = null; render(); }));
   appEl.querySelectorAll('[data-confirm-delete]').forEach(b => b.addEventListener('click', () => deleteFood(b.dataset.confirmDelete)));
+
+  if (state.isAdmin) attachAdminHandlers();
 }
 
 function refocus(id) { const el = document.getElementById(id); if (el) { el.focus(); const v = el.value; el.value = ''; el.value = v; } }
@@ -97,6 +99,7 @@ async function saveGoal(val) {
 async function loadAll() {
   await Promise.all([loadFoods(), loadProfile()]);
   await Promise.all([loadToday(), loadHistory()]);
+  if (state.isAdmin) await loadUsers();
   render();
 }
 
