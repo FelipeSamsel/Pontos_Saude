@@ -38,9 +38,19 @@ function stepQty(id, delta) {
 
 function foodPickRow(f) {
   const q = addPanelState.qty[f.id] ?? 1;
-  return `<div class="food-row"><div class="food-main"><div class="food-name">${escapeHtml(f.name)}</div><div class="food-cat">${escapeHtml(f.category)} · ${fmtNum(f.points)} pts/un.</div></div>
-    <div class="qty-stepper"><button data-qty-minus="${f.id}">−</button><input type="text" readonly value="${fmtNum(q)}"><button data-qty-plus="${f.id}">+</button></div>
-    <button class="icon-btn" style="color:var(--accent)" data-pick-food="${f.id}">${iconPlus()}</button></div>`;
+  return `<div class="food-row">
+    <div class="food-main">
+      <div class="food-name">${escapeHtml(f.name)}</div>
+      <div class="food-cat">${escapeHtml(f.category)}</div>
+    </div>
+    <div class="food-pts-danger">${fmtNum(f.points)}</div>
+    <div class="qty-stepper">
+      <button data-qty-minus="${f.id}">−</button>
+      <input type="text" readonly value="${fmtNum(q)}">
+      <button data-qty-plus="${f.id}">+</button>
+    </div>
+    <button class="icon-btn" style="color:var(--accent)" data-pick-food="${f.id}">${iconPlus()}</button>
+  </div>`;
 }
 
 async function confirmAddEntry(foodId) {
