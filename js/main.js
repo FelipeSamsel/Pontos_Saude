@@ -4,7 +4,7 @@
 function render() {
   if (!state.session) { renderAuth(); return; }
 
-  viewerBox.innerHTML = `<span>${escapeHtml(state.profile?.email || '')}${state.isAdmin ? ' · admin' : ''}</span><button id="logoutBtn">sair</button>`;
+  viewerBox.innerHTML = `<span>${escapeHtml(state.profile?.email || '')}</span>${state.isAdmin ? `<button id="adminLabelBtn" class="admin-label">admin</button>` : ''}<button id="logoutBtn">sair</button>`;
 
   const goal = state.profile?.daily_goal ?? 21;
   const total = state.entries.reduce((s, e) => s + e.points * e.qty, 0);
@@ -24,15 +24,34 @@ function render() {
       <div class="goal-edit"><span>Meta diária:</span><input type="number" min="0" step="0.5" id="goalInput" value="${goal}"><button id="goalSaveBtn">salvar</button></div>
     </div>
   </div>
-  <div class="tabs">${tabBtn('hoje', 'Hoje')}${tabBtn('historico', 'Histórico')}${tabBtn('alimentos', 'Alimentos')}${state.isAdmin ? tabBtn('usuarios', 'Usuários') : ''}</div>
-  <div id="panels">${renderHoje()}${renderHistorico()}${renderAlimentos()}${state.isAdmin ? renderUsuarios() : ''}</div>`;
+  <div id="panels">${renderHoje()}${renderHistorico()}${renderAlimentos()}${state.isAdmin ? renderUsuarios() : ''}</div>
+
+  <button class="fab-add" id="fabAddBtn" aria-label="Adicionar alimento">
+    <span class="fab-circle">${iconPlus()}</span>
+    <span class="fab-label">Alimento</span>
+  </button>
+  <nav class="bottom-nav">
+    ${bottomNavItem('hoje', 'Hoje')}
+    ${bottomNavItem('historico', 'Histórico')}
+    <span class="bottom-nav-spacer"></span>
+    ${bottomNavItem('alimentos', 'Alimentos')}
+  </nav>`;
 
   appEl.innerHTML = html;
   attachHandlers();
   document.getElementById('logoutBtn').addEventListener('click', () => sb.auth.signOut());
+  const adminLabelBtn = document.getElementById('adminLabelBtn');
+  if (adminLabelBtn) adminLabelBtn.addEventListener('click', () => { state.tab = 'usuarios'; render(); });
+  const fabBtn = document.getElementById('fabAddBtn');
+  if (fabBtn) fabBtn.addEventListener('click', () => {
+    state.tab = 'hoje'; state.adminOpen = false; state.editingFoodId = null; render();
+    renderAddFoodPanel();
+    document.getElementById('addFoodPanel')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
 }
 
 function tabBtn(key, label) { return `<button class="tab-btn ${state.tab === key ? 'active' : ''}" data-tab="${key}">${label}</button>`; }
+function bottomNavItem(key, label) { return `<button class="bottom-nav-item ${state.tab === key ? 'active' : ''}" data-tab="${key}">${label}</button>`; }
 
 // ---------- event wiring ----------
 function attachHandlers() {
